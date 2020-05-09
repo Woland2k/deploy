@@ -4,24 +4,21 @@ metadata:
   name: vc-db
 spec:
   replicas: 1
-  selector:
-    matchLabels:
-      app: vc-db
-  strategy: {}
   template:
     metadata:
       labels:
         app: vc-db
     spec:
+      terminationGracePeriodSeconds: 10
       containers:
-      - env:
+      - name: vc-db
+        image: mcr.microsoft.com/mssql/server:latest
+        ports:
+        - containerPort: 1433
+        env:
         - name: ACCEPT_EULA
           value: Y
         - name: MSSQL_PID
           value: Express
         - name: SA_PASSWORD
           value: v!rto_Labs!
-        image: mcr.microsoft.com/mssql/server:latest
-        name: vc-db
-        ports:
-        - containerPort: 1433

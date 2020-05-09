@@ -4,8 +4,8 @@ metadata:
   name: vc-db
 spec:
   ports:
-  - name: "1433"
-    port: 1433
-    targetPort: 1433
+    - protocol: TCP
+      port: 1433
+      targetPort: 1433
   selector:
     app: vc-db
