@@ -12,7 +12,7 @@ kind: PersistentVolumeClaim
 metadata:
   name: modules-volume
   annotations:
-    volume.beta.kubernetes.io/storage-class: azure-disk2
+    volume.beta.kubernetes.io/storage-class: "azure-disk2"
 spec:
   accessModes:
   - ReadWriteOnce
