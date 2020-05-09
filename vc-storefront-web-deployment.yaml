@@ -1,0 +1,53 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    kompose.cmd: c:\Utils\kompose.exe convert
+    kompose.version: 1.21.0 (992df58d8)
+  creationTimestamp: null
+  labels:
+    io.kompose.service: vc-storefront-web
+  name: vc-storefront-web
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      io.kompose.service: vc-storefront-web
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      annotations:
+        kompose.cmd: c:\Utils\kompose.exe convert
+        kompose.version: 1.21.0 (992df58d8)
+      creationTimestamp: null
+      labels:
+        io.kompose.network/nat: "true"
+        io.kompose.service: vc-storefront-web
+    spec:
+      containers:
+      - env:
+        - name: ASPNETCORE_ENVIRONMENT
+          value: Development
+        - name: VirtoCommerce:Endpoint:Password
+          value: store
+        - name: VirtoCommerce:Endpoint:Url
+          value: http://vc-platform-web
+        - name: VirtoCommerce:Endpoint:UserName
+          value: admin
+        image: virtocommerce/storefront:latest
+        imagePullPolicy: ""
+        name: vc-storefront-web
+        ports:
+        - containerPort: 80
+        resources: {}
+        volumeMounts:
+        - mountPath: /opt/virtocommerce/storefront/wwwroot/cms-content
+          name: cms-content-volume
+      restartPolicy: Always
+      serviceAccountName: ""
+      volumes:
+      - name: cms-content-volume
+        persistentVolumeClaim:
+          claimName: cms-content-volume
+status: {}

@@ -1,0 +1,71 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    kompose.cmd: c:\Utils\kompose.exe convert
+    kompose.version: 1.21.0 (992df58d8)
+  creationTimestamp: null
+  labels:
+    io.kompose.service: vc-platform-web
+  name: vc-platform-web
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      io.kompose.service: vc-platform-web
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      annotations:
+        kompose.cmd: c:\Utils\kompose.exe convert
+        kompose.version: 1.21.0 (992df58d8)
+      creationTimestamp: null
+      labels:
+        io.kompose.network/nat: "true"
+        io.kompose.service: vc-platform-web
+    spec:
+      containers:
+      - command:
+        - /wait-for-it.sh
+        - vc-db:1433
+        - -t
+        - "120"
+        - --
+        - dotnet
+        - VirtoCommerce.Platform.Web.dll
+        env:
+        - name: ASPNETCORE_URLS
+          value: http://+
+        - name: Assets:FileSystem:PublicUrl
+          value: http://localhost:8090/assets/
+        - name: ConnectionStrings:VirtoCommerce
+          value: Data Source=vc-db;Initial Catalog=VirtoCommerce3docker;Persist Security
+            Info=True;User ID=sa;Password=v!rto_Labs!;MultipleActiveResultSets=False;
+        - name: Content:FileSystem:PublicUrl
+          value: http://localhost:8090/cms-content/
+        - name: Search:Provider
+          value: Lucene
+        - name: VirtoCommerce:AllowInsecureHttp
+          value: "true"
+        image: virtocommerce/platform:3.0
+        imagePullPolicy: ""
+        name: vc-platform-web
+        ports:
+        - containerPort: 80
+        resources: {}
+        volumeMounts:
+        - mountPath: /opt/virtocommerce/platform/wwwroot/cms-content
+          name: cms-content-volume
+        - mountPath: /opt/virtocommerce/platform/modules
+          name: modules-volume
+      restartPolicy: Always
+      serviceAccountName: ""
+      volumes:
+      - name: cms-content-volume
+        persistentVolumeClaim:
+          claimName: cms-content-volume
+      - name: modules-volume
+        persistentVolumeClaim:
+          claimName: modules-volume
+status: {}
