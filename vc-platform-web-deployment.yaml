@@ -24,15 +24,15 @@ spec:
         env:
         - name: ASPNETCORE_URLS
           value: "http://+"
-        - name: Assets:FileSystem:PublicUrl
+        - name: "Assets:FileSystem:PublicUrl"
           value: "http://localhost:8090/assets/"
-        - name: ConnectionStrings:VirtoCommerce
+        - name: "ConnectionStrings:VirtoCommerce"
           value: "Data Source=vc-db;Initial Catalog=VirtoCommerce3docker;Persist Security Info=True;User ID=sa;Password=v!rto_Labs!;MultipleActiveResultSets=False;"
-        - name: Content:FileSystem:PublicUrl
+        - name: "Content:FileSystem:PublicUrl"
           value: "http://localhost:8090/cms-content/"
-        - name: Search:Provider
+        - name: "Search:Provider"
           value: "Lucene"
-        - name: VirtoCommerce:AllowInsecureHttp
+        - name: "VirtoCommerce:AllowInsecureHttp"
           value: "true"
         image: virtocommerce/platform:3.0
         name: vc-platform-web
