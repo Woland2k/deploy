@@ -34,6 +34,14 @@ spec:
           value: "Lucene"
         - name: VirtoCommerce__AllowInsecureHttp
           value: "true"
+        - name: VirtoCommerce__LicenseFilePath
+          value: "App_Data/VirtoCommerce.lic"
+        - name: VirtoCommerce__LicensePublicKeyPath
+          value: "App_Data/public.key"
+        - name: VirtoCommerce__LicensePrivateKeyPath
+          value: "App_Data/private.key"
+        - name: VirtoCommerce__LocalUploadFolderPath
+          value: "App_Data/Uploads"
         image: virtocommerce/platform:3.0
         name: vc-platform-web
         ports:
