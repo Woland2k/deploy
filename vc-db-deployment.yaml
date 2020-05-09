@@ -4,6 +4,9 @@ metadata:
   name: vc-db
 spec:
   replicas: 1
+  selector:
+    matchLabels:
+      name: vc-db
   template:
     metadata:
       labels:
