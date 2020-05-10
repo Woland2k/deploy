@@ -25,7 +25,7 @@ spec:
         - name: ASPNETCORE_URLS
           value: "http://+"
         - name: Assets__FileSystem__PublicUrl
-          value: "/cms-content/assets/"
+          value: "http://vc-dev-backoffice.westus.cloudapp.azure.com/assets/"
         - name: Assets__FileSystem__RootPath
           value: "~/cms-content/assets"
         - name: ConnectionStrings__VirtoCommerce
